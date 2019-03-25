@@ -28,6 +28,8 @@ Each time an account is created, regardless of type, we also write a SQL Query t
 
 ## Games
 Games are central to our application as it is what users purchase. The form for creating games comes pre-filled with some data to guide the user for the fields which are not mandatory; the users can delete the default data and run few risks of getting errors despite keeping those fields empty. The fields which are mandatory simply have placeholders. The requirement on the front-end forces users to write data in those fields, as submitting the form without them guarantees an error message otherwise.
+
+Whenever a game is created, the developer is shown other games in the same category with which their game competes with.
 * Creating games
 ![Create Game](gifs/)
 
