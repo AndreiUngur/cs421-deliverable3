@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>RiseUp Gamers</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Gamers Rise Up</a>
+          <ul class="nav navbar-nav">
+            <li><a href="#accounts">Accounts</a></li>
+            <li><a href="#games">Games</a></li>
+            <li><a href="#payment">Payment Methods</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="starter-template">
+        <h1>Rise Up Gamers</h1>
+        <p class="lead">Basic page for the CS421 deliverable 3.</p>
+      </div>
+
+      <script>
+          function handleSubmitGames() {
+              alert('Game Created!');
+          }
+          function success(){
+            alert("Success!");
+          }
+          function handleSubmitDevAccounts() {
+            $.ajax({
+              url:"http://localhost:4293/create/dev",
+              type:"POST",
+              data:'{"username": "asd", "password": "password", "email": "email", "studio": "studio"}',
+              contentType:"application/json",
+              dataType:"json",
+              success: function(data){
+                alert(data);
+              }
+            });
+          }
+      </script>
+
+      <section id="accounts">
+        <h1>Accounts</h1>
+        <form onsubmit="return handleSubmitDevAccounts();">
+          Username:<br>
+          <input type="text" name="username" value="FrenchFry">
+          <br><br>
+          Password:<br>
+          <input type="text" name="description" value="il0vefries">
+          <br><br>
+          Email:<br>
+          <input type="text" name="price" value="french@fry.com">
+          <br><br>
+          Studio:<br>
+          <input type="text" name="is_on_sale" value="Potato Studios">
+          <br><br>
+          <input type="submit" value="Submit">
+        </form> 
+      </section>
+      
+      <section id="games">
+        <h1>Games</h1>
+        <form onsubmit="return handleSubmitGames();">
+          Title:<br>
+          <input type="text" name="title" value="Poutine Simluator">
+          <br><br>
+          Description:<br>
+          <input type="text" name="description" value="Simulates being a poutine">
+          <br><br>
+          Price:<br>
+          <input type="text" name="price" value="12.12">
+          <br><br>
+          Is this on sale?<br>
+          <input type="text" name="is_on_sale" value="yes">
+          <br><br>
+          Sale Price:<br>
+          <input type="text" name="sale_price" value="10.11">
+          <br><br>
+          Category:<br>
+          <input type="text" name="category" value="Food">
+          <br><br>
+          Your developer username:<br>
+          <input type="text" name="developer" value="FrenchFry">
+          <br><br>
+          <input type="submit" value="Submit">
+        </form> 
+      </section>
+    </div><!-- /.container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+  </body>
+</html>
+
