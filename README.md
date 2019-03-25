@@ -24,7 +24,7 @@ Each time an account is created, regardless of type, we also write a SQL Query t
 ![Dev Creation & Viewing all devs](gifs/create_dev.gif)
 
 * As you may notice, the app shows the DB constraints on password length
-![Create Password Error](gifs/create_dev_pw_length.gif]
+![Create Password Error](gifs/create_dev_pw_length.gif)
 
 ## Games
 Games are central to our application as it is what users purchase. The form for creating games comes pre-filled with some data to guide the user for the fields which are not mandatory; the users can delete the default data and run few risks of getting errors despite keeping those fields empty. The fields which are mandatory simply have placeholders. The requirement on the front-end forces users to write data in those fields, as submitting the form without them guarantees an error message otherwise.
