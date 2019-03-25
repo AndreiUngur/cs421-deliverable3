@@ -8,13 +8,13 @@ def add_gamelisting(game_name, game_desc, is_on_sale, price, category, sale_pric
   find_gamelisting_command = f"SELECT * FROM GameListing WHERE title='{game_name}';"
   result = db.engine.execute(find_gamelisting_command).first()
   if result:
-    return jsonify({"status": f"Your game already exists! {result}"})
+    return f"<h1> Error! </h1> <p>Your game already exists! : {result}"
   add_gamelisting_command = 'INSERT INTO GameListing ("title", "description", "is_on_sale", "price", "category", "sale_price", "developer_username")' \
                             f"VALUES ('{game_name}', '{game_desc}', {is_on_sale}, {price}, '{category}', {sale_price}, '{developer}');"
   try:
     db.engine.execute(add_gamelisting_command)
   except Exception as e:
-      return jsonify({"error": str(e)})
+      return f"<h1> Error! </h1> <p> {str(e)}"
   return show_all_games()
 
 

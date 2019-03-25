@@ -5,7 +5,7 @@
 You need `python 3` to run this. If you just installed python, make sure you're using 3 with `python --version`. Your pip should also map to python 3 (`pip --version` should point to python 3)
 
 
-If you're running pyhont 2 but you have 3 installed, you can just use `python3` or `pip3` instead of the `python` or `pip` commands.
+If you're running python 2 but you have 3 installed, you can just use `python3` or `pip3` instead of the `python` or `pip` commands.
 
 First, run this to get setup:
 ```
@@ -13,7 +13,17 @@ python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
-This will create a self-contained environment where you have all the dependencies of this project. Once that's done, create the `cs421` database in postgres. Log in using your postgres account to this DB and execute the following commands (just copy paste):
+This will create a self-contained environment where you have all the dependencies of this project. Once that's done, create the `cs421` database in postgres. Once you have your account ready, you should be able to run: `psql cs421 <username>` which will prompt you for a password.
+Run these commands:
+```
+export PSQL_USER=<your_username>
+export PSQL_PW=<your_pw>
+export PSQL_DB=cs421
+```
+
+Log in using your postgres account to this DB and execute the following commands (just copy paste):
+
+
 ```
 CREATE TABLE Account (
 username varchar(255) UNIQUE NOT NULL PRIMARY KEY,

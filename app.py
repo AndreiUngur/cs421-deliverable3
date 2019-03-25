@@ -25,9 +25,12 @@ def get_games_endpoint():
 def add_developer_endpoint():
   content = request.form
   if not content:
-       return jsonify({"status": "You need some form content"})
+       return "<h1> Error! </h1><p>You need some form content</p>"
   username, password = content.get("username"), content.get("password")
   email, studio = content.get("email"), content.get("studio")
+  developer_from_db = find_dev(username)
+  if developer_from_db:
+       return "<h1> Error! </h1> Your username already has a developer account!"
   return add_dev(username, password, email, studio)
 
 
