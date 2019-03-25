@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, make_response
 from sqlalchemy import create_engine
 from flask_cors import CORS, cross_origin
-from utils import app, db
+from utils import app, db, tunnel
 from games import get_games, add_gamelisting
 from payment import add_payment_method
 from users import add_dev, find_dev
@@ -60,3 +60,5 @@ def add_payment_method_endpoint():
 
 if __name__ == '__main__':
   app.run(port=port)
+  tunnel.close()
+  print("Closed tunnel.")

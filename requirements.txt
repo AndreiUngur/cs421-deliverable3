@@ -5,4 +5,5 @@ Flask-Migrate==2.3.1
 Flask-SQLAlchemy==2.3.2
 psycopg2==2.7.7
 requests==2.21.0
+sshtunnel==0.1.4
 
