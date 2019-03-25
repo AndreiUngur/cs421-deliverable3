@@ -35,49 +35,20 @@
         <p class="lead">Basic page for the CS421 deliverable 3.</p>
       </div>
 
-      <script>
-          function success(data){
-            if (data['status'])
-            alert(data['status']);
-          }
-
-          function handleSubmitGames() {
-            $.ajax({
-              url:"http://localhost:4293/create/dev",
-              type:"POST",
-              data:'{"username": "asd", "password": "password", "email": "email", "studio": "studio"}',
-              contentType:"application/json",
-              dataType:"json",
-              success: success
-            });
-          }
-
-          function handleSubmitDevAccounts() {
-            $.ajax({
-              url:"http://localhost:4293/create/dev",
-              type:"POST",
-              data:'{"username": "asd", "password": "password", "email": "email", "studio": "studio"}',
-              contentType:"application/json",
-              dataType:"json",
-              success: success
-            });
-          }
-      </script>
-
       <section id="accounts">
         <h1>Accounts</h1>
-        <form onsubmit="return handleSubmitDevAccounts();">
+        <form action="http://localhost:4293/create/dev" method="post">
           Username:<br>
-          <input type="text" name="username" value="FrenchFry">
+          <input type="text" id="username" name="username" value="FrenchFry">
           <br><br>
           Password:<br>
-          <input type="text" name="description" value="il0vefries">
+          <input type="text" id="password" name="password" value="il0vefries">
           <br><br>
           Email:<br>
-          <input type="text" name="price" value="french@fry.com">
+          <input type="text" id="email" name="email" value="french@fry.com">
           <br><br>
           Studio:<br>
-          <input type="text" name="is_on_sale" value="Potato Studios">
+          <input type="text" id="studio" name="studio" value="Potato Studios">
           <br><br>
           <input type="submit" value="Submit">
         </form> 
@@ -85,27 +56,27 @@
       
       <section id="games">
         <h1>Games</h1>
-        <form onsubmit="return handleSubmitGames();">
+        <form action="http://localhost:4293/create/game" method="post">
           Title:<br>
-          <input type="text" name="title" value="Poutine Simluator">
+          <input type="text" id="title" name="title" value="Poutine Simluator">
           <br><br>
           Description:<br>
-          <input type="text" name="description" value="Simulates being a poutine">
+          <input type="text" id="description" name="description" value="Simulates being a poutine">
           <br><br>
           Price:<br>
-          <input type="text" name="price" value="12.12">
+          <input type="text" id="price" name="price" value="12.12">
           <br><br>
           Is this on sale?<br>
-          <input type="text" name="is_on_sale" value="yes">
+          <input type="text" id="is_on_sale" name="is_on_sale" value="yes">
           <br><br>
           Sale Price:<br>
-          <input type="text" name="sale_price" value="10.11">
+          <input type="text" id="sale_price" name="sale_price" value="10.11">
           <br><br>
           Category:<br>
-          <input type="text" name="category" value="Food">
+          <input type="text" id="category" name="category" value="Food">
           <br><br>
           Your developer username:<br>
-          <input type="text" name="developer" value="FrenchFry">
+          <input type="text" id="developer" name="developer" value="FrenchFry">
           <br><br>
           <input type="submit" value="Submit">
         </form> 

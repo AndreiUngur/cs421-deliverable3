@@ -22,9 +22,9 @@ def get_games_endpoint():
 @app.route("/create/dev", methods=["POST"])
 @cross_origin()
 def add_developer_endpoint():
-    content = request.json
+    content = request.form
     if not content:
-        return jsonify({"status": "You need a JSON body"})
+        return jsonify({"status": "You need some form content"})
     username, password = content.get("username"), content.get("password")
     email, studio = content.get("email"), content.get("studio")
     return jsonify(add_dev(username, password, email, studio))
@@ -33,11 +33,15 @@ def add_developer_endpoint():
 @app.route("/create/game", methods=["POST"])
 @cross_origin()
 def add_gamelisting_endpoint():
-    content = request.json
+    content = request.form
     if not content:
-        return jsonify({"status": "You need a JSON body"})
+        return jsonify({"status": "You need some form content"})
     game_name, game_desc, price, category = content.get("title"), content.get("description"), content.get("price"), content.get("category")
     is_on_sale, sale_price = content.get("is_on_sale"), content.get("sale_price")
+    if is_on_sale.lower() == 'yes':
+         is_on_sale = True
+    else:
+         is_on_sale = False
     developer = content.get("developer")
     return jsonify(add_gamelisting(game_name, game_desc, is_on_sale, price, category, sale_price, developer))
 
