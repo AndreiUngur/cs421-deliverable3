@@ -17,7 +17,7 @@ This minimum viable product shows most, but not all, of the abilities of our dat
 
 ## Accounts
 Each time an account is created, regardless of type, we also write a SQL Query to get interesting data back to the user.
-* Creating user accounts and viewing existing user accounts;
+* Creating user accounts and viewing existing user accounts (note: this Gif includes a few error scenarios before the success scenario. Sit tight!);
 ![User Creation & Viewing all users](gifs/create_user.gif)
 
 * Creating developer accounts and viewing their contents;
