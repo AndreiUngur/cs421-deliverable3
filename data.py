@@ -7,8 +7,6 @@ def vis_data():
     return "Visualizing Data" + vis_reviews() + vis_users()
 
 def vis_reviews():
-    find_all_gamelistings_command = "SELECT rating, date FROM reviews;"
-    results = db.engine.execute(find_all_gamelistings_command)
     HTML_output = '<head><title>Devs</title><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">' \
                     '</head><body><h1>All Devs</h1>' \
                     '<table><tr><th>Rating</th><th>Date</th>'
