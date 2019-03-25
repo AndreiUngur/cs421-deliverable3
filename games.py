@@ -1,5 +1,4 @@
 from utils import db
-from flask import jsonify
 
 def get_games():
     pass
