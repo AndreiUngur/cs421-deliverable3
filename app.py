@@ -79,8 +79,11 @@ def add_gamelisting_endpoint():
   is_on_sale, sale_price = content.get("is_on_sale"), content.get("sale_price")
   if is_on_sale.lower() == 'yes':
        is_on_sale = True
+       if not sale_price:
+            return "<h1> Error! </h1> <p> You can't have a game on sale without a sale price ... </p>"
   else:
        is_on_sale = False
+       sale_price = 0
   developer = content.get("developer")
   developer_from_db = find_dev(developer)
   if not developer_from_db:
@@ -100,7 +103,7 @@ def add_payment_method_endpoint():
        dev = find_dev(username)
        if not dev:
             return "<h1> Error! </h1> <p> No account found with that username. </p>"
-  if not username or not is_primary:
+  if not username:
        return "<h1> Error! </h1> <p> You need to specify a username, and let us know if this is your primary method of payment. </p>"
   if not payment:
        return "<h1> Error ! </h1> <p> You need to specify a payment method. </p>"
@@ -109,17 +112,18 @@ def add_payment_method_endpoint():
        if not cardnumber or not cvc or not expirydate:
             return "<h1> Error! </h1> <p> You need to specify a card number, CVC and expiry date. </p>"
        return add_cc(username, is_primary, cardnumber, cvc, expirydate)
-  if payment == "Riseup":
+  elif payment == "Riseup":
        riseup_public_key = content.get('publickey')
        if not riseup_public_key:
             return "<h1> Error! </h1> <p> You need to specify a Riseup Public Key. </p>"
        return add_riseup(username, is_primary, riseup_public_key)
-  if payment == "Paypal":
+  elif payment == "Paypal":
        ppuser, pppass = content.get("ppusername"), content.get("pppassword")
        if not ppuser or not pppass:
             return "<h1> Error! </h1> <p> You need to specify a Paypal username and password. </p>"
        return add_paypal(username, is_primary, ppuser, pppass)
-
+  else:
+       return "<h1> Error! </h1> <p> You need to input a payment type. We support Riseup Wallet, Credit Card and Paypal.</p> "
   return add_payment_method()
 
 
