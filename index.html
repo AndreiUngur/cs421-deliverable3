@@ -41,16 +41,16 @@
         <h1>Developer Accounts</h1>
         <form action="http://localhost:4293/create/dev" method="post">
           Username:<br>
-          <input type="text" id="username" name="username" value="FrenchFry">
+          <input type="text" id="username" name="username" placeholder="FrenchFry" required>
           <br><br>
           Password:<br>
-          <input type="text" id="password" name="password" value="il0vefries">
+          <input type="text" id="password" name="password" placeholder="il0vefries" required>
           <br><br>
           Email:<br>
-          <input type="text" id="email" name="email" value="french@fry.com">
+          <input type="text" id="email" name="email" placeholder="french@fry.com" required>
           <br><br>
           Studio:<br>
-          <input type="text" id="studio" name="studio" value="Potato Studios">
+          <input type="text" id="studio" name="studio" placeholder="Potato Studios" required>
           <br><br>
           <input class="btn btn-primary" type="submit" value="Submit">
           <button type=button onclick="location.href = 'http://localhost:4293/devs';" class="btn btn-info">View All</button>
@@ -59,16 +59,16 @@
         <h1>User Accounts</h1>
         <form action="http://localhost:4293/create/user" method="post">
           Username:<br>
-          <input type="text" id="username" name="username" value="FrenchFry">
+          <input type="text" id="username" name="username" placeholder="FrenchFry" required>
           <br><br>
           Password:<br>
-          <input type="text" id="password" name="password" value="il0vefries">
+          <input type="text" id="password" name="password" placeholder="il0vefries" required>
           <br><br>
           Email:<br>
-          <input type="text" id="email" name="email" value="french@fry.com">
+          <input type="text" id="email" name="email" placeholder="french@fry.com" required>
           <br><br>
           Full Name:<br>
-          <input type="text" id="name" name="name" value="John Smith">
+          <input type="text" id="name" name="name" placeholder="John Smith" required>
           <br><br>
           <input class="btn btn-primary" type="submit" value="Submit">
           <button type=button onclick="location.href = 'http://localhost:4293/users';" class="btn btn-info">View All</button>
@@ -80,13 +80,13 @@
         <h1>Games</h1>
         <form action="http://localhost:4293/create/game" method="post">
           Title:<br>
-          <input type="text" id="title" name="title" value="Poutine Simluator">
+          <input type="text" id="title" name="title" placeholder="Poutine Simluator" required>
           <br><br>
           Description:<br>
           <input type="text" id="description" name="description" value="Simulates being a poutine">
           <br><br>
           Price:<br>
-          <input type="text" id="price" name="price" value="12.12">
+          <input type="text" id="price" name="price" placeholder="12.12" required>
           <br><br>
           Is this on sale?<br>
           <input type="text" id="is_on_sale" name="is_on_sale" value="yes">
@@ -95,10 +95,10 @@
           <input type="text" id="sale_price" name="sale_price" value="10.11">
           <br><br>
           Category:<br>
-          <input type="text" id="category" name="category" value="Food">
+          <input type="text" id="category" name="category" placeholder="Food" required>
           <br><br>
           Your developer username:<br>
-          <input type="text" id="developer" name="developer" value="FrenchFry">
+          <input type="text" id="developer" name="developer" placeholder="FrenchFry" required>
           <br><br>
           <input class="btn btn-primary" type="submit" value="Submit">
           <button type=button onclick="location.href = 'http://localhost:4293/games';" class="btn btn-info">View All</button>
@@ -111,20 +111,20 @@
           .payments{
             display:none;
           }  
-          #showCreditcard{
+          #showCreditCard{
             color:red;
-              border:1px solid red;
-              padding:10px;
+            border:1px solid red;
+            padding:10px;
           }
           #showRiseup{
             color:green;
-              border:1px solid green;
-              padding:10px;
+            border:1px solid green;
+            padding:10px;
           }
           #showPaypal{
             color:blue;
-              border:1px solid blue;
-              padding:10px;
+            border:1px solid blue;
+            padding:10px;
           }
         </style>
         <script>
@@ -138,8 +138,8 @@
         </script>
         <form action="http://localhost:4293/create/payment" method="post">
           <div style="display:inline-block">
-            <span>Preferred payment method: </span>
-            <select id="paymentSelection">
+            <span>Payment method: </span>
+            <select  id="paymentSelection" name="payment" required>
               <option selected disabled>Please select an option</option>
               <option value="CreditCard">Credit Card</option>
               <option value="Riseup">Riseup Wallet</option>
@@ -148,36 +148,45 @@
           </div>
           <br><br>
           Username:<br>
-          <input type="text" id="description" name="description" value="Simulates being a poutine">
+          <input type="text" id="username" name="username" placeholder="Poutine" required>
+          <br><br>
+          Is this your primary one?<br>
+          <input type="text" id="isprimary" name="isprimary" placeholder="yes" required>
           <br><br>
           <div id="showCreditCard" class="payments">
             Card Number:<br>
-            <input type="text" id="cardnumber" name="cardnumber" value="1234 5678 1234 5678">
+            <input type="text" id="cardnumber" name="cardnumber" placeholder="1234 5678 1234 5678">
             <br><br>
             CVC:<br>
-            <input type="text" id="cvc" name="cvc" value="123">
+            <input type="text" id="cvc" name="cvc" placeholder="123">
             <br><br>
             Expiry Date<br>
-            <input type="text" id="expirydate" name="expirydate" value="Today">
+            <input type="date" id="expirydate" name="expirydate">
             <br><br>
           </div>
           <div id="showRiseup" class="payments">
             Public Key<br>
-            <input type="text" id="publickey" name="publickey" value="1cdy1gc7egc1h0chhf1">
+            <input type="text" id="publickey" name="publickey" placeholder="1cdy1gc7egc1h0chhf1">
             <br><br>
           </div>
           <div id="showPaypal" class="payments">
             Paypal Username<br>
-            <input type="text" id="ppusername" name="ppusername" value="potato">
+            <input type="text" id="ppusername" name="ppusername" placeholder="potato">
             <br><br>
             Paypal Password<br>
-            <input type="text" id="pppassword" name="pppassword" value="p0tat0">
+            <input type="text" id="pppassword" name="pppassword" placeholder="p0tat0">
             <br><br>
           </div>
-
+          <br>
           <input class="btn btn-primary" type="submit" value="Submit">
-          <button type=button onclick="location.href = 'http://localhost:4293/games';" class="btn btn-info">View All</button>
         </form> 
+        <hr>
+        <form action="http://localhost:4293/paymentmethods">
+          Username to view all payment methods for:<br>
+          <input type="text" id="username" name="username" placeholder="Poutine" required>
+          <input class="btn btn-primary" type="submit" value="View All">
+        </form> 
+        <br><br>
       </section>
     </div><!-- /.container -->
 

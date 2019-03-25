@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 from flask_cors import CORS, cross_origin
 from utils import app, db, tunnel
 from games import add_gamelisting, show_all_games
-from payment import add_payment_method
+from payment import add_cc, add_paypal, add_riseup, show_all_payment
 from data import vis_data
 from users import add_dev, find_dev, add_user, find_user, show_all_users, show_all_devs
 
@@ -88,11 +88,48 @@ def add_gamelisting_endpoint():
   return add_gamelisting(game_name, game_desc, is_on_sale, price, category, sale_price, developer)
 
 
-@app.route('/create/paymentmethod')
+@app.route('/create/payment', methods=["POST"])
 @cross_origin()
 def add_payment_method_endpoint():
-  content = request.json
+  content = request.form
+  payment = content.get("payment")
+  username, is_primary = content.get("username"), content.get("isprimary")
+  is_primary = is_primary == "yes"
+  user = find_user(username)
+  if not user:
+       dev = find_dev(username)
+       if not dev:
+            return "<h1> Error! </h1> <p> No account found with that username. </p>"
+  if not username or not is_primary:
+       return "<h1> Error! </h1> <p> You need to specify a username, and let us know if this is your primary method of payment. </p>"
+  if not payment:
+       return "<h1> Error ! </h1> <p> You need to specify a payment method. </p>"
+  if payment == "CreditCard":
+       cardnumber, cvc, expirydate = content.get("cardnumber"), content.get("cvc"), content.get("expirydate")
+       if not cardnumber or not cvc or not expirydate:
+            return "<h1> Error! </h1> <p> You need to specify a card number, CVC and expiry date. </p>"
+       return add_cc(username, is_primary, cardnumber, cvc, expirydate)
+  if payment == "Riseup":
+       riseup_public_key = content.get('publickey')
+       if not riseup_public_key:
+            return "<h1> Error! </h1> <p> You need to specify a Riseup Public Key. </p>"
+       return add_riseup(username, is_primary, riseup_public_key)
+  if payment == "Paypal":
+       ppuser, pppass = content.get("ppusername"), content.get("pppassword")
+       if not ppuser or not pppass:
+            return "<h1> Error! </h1> <p> You need to specify a Paypal username and password. </p>"
+       return add_paypal(username, is_primary, ppuser, pppass)
+
   return add_payment_method()
+
+
+@app.route("/paymentmethods")
+@cross_origin()
+def get_payments():
+     username = request.args.get('username')
+     if not username:
+          return "<h1> Error </h1> <p> You can only view the payment data if you specify the user! </h1>"
+     return show_all_payment(username)
 
 
 if __name__ == '__main__':
