@@ -2,7 +2,7 @@ from flask import Flask, request, make_response
 from sqlalchemy import create_engine
 from flask_cors import CORS, cross_origin
 from utils import app, db, tunnel
-from games import get_games, add_gamelisting
+from games import add_gamelisting, show_all_games
 from payment import add_payment_method
 from users import add_dev, find_dev, add_user, find_user, show_all_users, show_all_devs
 
@@ -12,12 +12,6 @@ port = 4293
 @app.route('/')
 def index():
   return "Hello world!"
-
-
-@app.route('/games')
-@cross_origin()
-def get_games_endpoint():
-  return get_games()
 
 
 @app.route("/create/dev", methods=["POST"])
@@ -60,6 +54,12 @@ def show_all_devs_endpoint():
      return show_all_devs()
 
 
+@app.route("/games")
+@cross_origin()
+def show_all_games_endpoint():
+     return show_all_games()
+
+
 @app.route("/create/game", methods=["POST"])
 @cross_origin()
 def add_gamelisting_endpoint():
@@ -77,6 +77,7 @@ def add_gamelisting_endpoint():
   if not developer_from_db:
        return "<h1> status </h1> <p> The developer you specified doesn't exist! Please create the account. </p>"
   return add_gamelisting(game_name, game_desc, is_on_sale, price, category, sale_price, developer)
+
 
 @app.route('/create/paymentmethod')
 @cross_origin()
