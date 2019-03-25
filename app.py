@@ -41,7 +41,7 @@ def add_user_endpoint():
   email, fullname = content.get("email"), content.get("name")
   user_from_db = find_user(username)
   if user_from_db:
-       return "<h1> Error! </h1> Your username already has a developer account!"
+       return "<h1> Error! </h1> Your username already has an account!"
   return add_user(username, password, email, fullname)
 
 

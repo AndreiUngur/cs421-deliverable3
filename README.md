@@ -1,170 +1,57 @@
-# cs421-deliverable3
+# RISEUP GAMERS
 
-# Installation
+Welcome to the RiseUp Gamers repository. This contains the code for the app deliverable in COMP421 for Group 32.
 
-You need `python 3` to run this. If you just installed python, make sure you're using 3 with `python --version`. Your pip should also map to python 3 (`pip --version` should point to python 3)
+Navigating this repository:
 
+* `index.html` contains a bare-bones front-end for the application, to be able to interact with it;
+* `app.py` contains a Flask back-end application which uses `utils.py` to connect to our Database via an SSH Tunnel to the `cs.mcgill.ca` server. For more information on how to get set up, visit the README in the directory `docs`;
+* `gifs` contains various gifs showcasing our app in action;
+* There are various `csv` files used for graphs included in our report.
 
-If you're running python 2 but you have 3 installed, you can just use `python3` or `pip3` instead of the `python` or `pip` commands.
+## Context
 
-First, run this to get setup:
-```
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
-This will create a self-contained environment where you have all the dependencies of this project. Once that's done, create the `cs421` database in postgres. Once you have your account ready, you should be able to run: `psql cs421 <username>` which will prompt you for a password.
-Run these commands:
-```
-export PSQL_USER=<your_username>
-export PSQL_PW=<your_pw>
-export PSQL_DB=cs421
-```
+The application is a cryptocurrency-enabled point of sale for videogames. Our app showcases some basic functionalities of this application, as defined by our database structure described in previous deliverables. It connects to the instance on the `cs.mcgill.ca` server via an SSH Tunnel, and has a frontend built using minimal HTML simply as a proof-of-concept.
 
-Log in using your postgres account to this DB and execute the following commands (just copy paste):
+This minimum viable product shows most, but not all, of the abilities of our database:
 
+## Accounts
+Each time an account is created, regardless of type, we also write a SQL Query to get interesting data back to the user.
+* Creating user accounts and viewing existing user accounts;
+![User Creation & Viewing all users](gifs/create_user.gif)
 
-```
-CREATE TABLE Account (
-username varchar(255) UNIQUE NOT NULL PRIMARY KEY,
-password varchar(255) NOT NULL,
-email varchar(255) UNIQUE NOT NULL,
-creation_date date
-);
+* Creating developer accounts and viewing their contents;
+![Dev Creation & Viewing all devs](gifs/create_dev.gif)
 
-CREATE TABLE DeveloperAccount (
-    studio_name varchar(255)
-) inherits (Account);
+* As you may notice, the app shows the DB constraints on password length
+![Create Password Error](gifs/create_dev_pw_length.gif]
 
-CREATE TABLE UserAccount (
-    name varchar(255) NOT NULL
-) inherits (Account);
+## Games
+Games are central to our application as it is what users purchase. The form for creating games comes pre-filled with some data to guide the user for the fields which are not mandatory; the users can delete the default data and run few risks of getting errors despite keeping those fields empty. The fields which are mandatory simply have placeholders. The requirement on the front-end forces users to write data in those fields, as submitting the form without them guarantees an error message otherwise.
+* Creating games
+![Create Game](gifs/)
 
-CREATE TABLE PaymentMethods (
-    date_added date NOT NULL,
-    is_primary boolean NOT NULL,
-    username varchar(255) NOT NULL,
-    PRIMARY KEY (username, date_added)
-);
+* Creating games on sale, without a price, is not allowed
+![Create Game, Sale No Price](gifs/create_game_sale_no_price.gif)
 
-CREATE RULE payment_username_ref
-AS ON INSERT TO PaymentMethods
-WHERE new.username NOT IN (SELECT username FROM Account)
-DO INSTEAD NOTHING;
+* Creating games on sale, with a price, is allowed
+![Create Game, Sale With Price](gifs/create_game_sale.gif)
 
-CREATE TABLE RiseupWallet (
-    public_key varchar(255) NOT NULL
-) inherits (PaymentMethods);
+* Creating games with non-existent developers is not allowed
+![Create Game Inexistant Dev](gifs/create_game_devnotexist.gif)
 
-CREATE RULE riseup_wallet_username_ref
-AS ON INSERT TO RiseupWallet
-WHERE new.username NOT IN (SELECT username FROM Account)
-DO INSTEAD NOTHING;
+## Payment Methods
+The final component of our minimum viable product: Payment methods used to purchase games. There are three payment methods available. Creating a paymen method of any type shows the user their other payment methods of the same type.
 
-CREATE TABLE CreditCard (
-    card_number varchar(255) NOT NULL,
-    cvc varchar(255) NOT NULL,
-    exp_date date NOT NULL
-) inherits (PaymentMethods);
+* Creating credit cards which are expired warns the user about their card's invalidity.
+![Create Card Invalid Expiry](gifs/create_card_expired.gif)
 
-CREATE RULE cc_wallet_username_ref
-AS ON INSERT TO CreditCard
-WHERE new.username NOT IN (SELECT username FROM Account)
-DO INSTEAD NOTHING;
+* Creating cards which are not expired will be added to the user's arsenal
+![Create Card Valid Expiry](gifs/create_card.gif)
 
-CREATE TABLE Paypal (
-    pp_email varchar (255) NOT NULL,
-pp_password varchar (255) NOT NULL
-) inherits (PaymentMethods);
+* We can also add credit cards to users which already have a few other credit cards (or payment methods)
+![Create Card Despite Existing](gifs/create_card_existing.gif)
 
-CREATE RULE paypal_wallet_username_ref
-AS ON INSERT TO Paypal
-WHERE new.username NOT IN (SELECT username FROM Account)
-DO INSTEAD NOTHING;
+* We can also create RiseUp Wallets and Paypal accounts as payment methods
+![Create RiseUp & Paypal](create_riseup_and_paypal.gif)
 
-CREATE TABLE GameListing (
-    listing_id serial PRIMARY KEY,
-    title varchar (255) NOT NULL UNIQUE,
-    description text,
-    is_on_sale boolean,
-    price float8 NOT NULL,
-    category varchar (255),
-    sale_price float8,
-    developer_username varchar(255) NOT NULL
-);
-
-CREATE RULE gamelisting_username_ref
-AS ON INSERT TO GameListing
-WHERE new.developer_username NOT IN (SELECT username FROM DeveloperAccount)
-DO INSTEAD NOTHING;
-
-
-CREATE TABLE GameKey (
-    key varchar (255) PRIMARY KEY,
-    redeemed boolean,
-    listing_id serial references GameListing(listing_id)
-);
-
-CREATE TABLE ShoppingCart (
-    username varchar(255) NOT NULL, 
-    listing_id serial references GameListing(listing_id),
-quantity integer,
-    PRIMARY KEY (username, listing_id)
-);
-
-CREATE RULE shoppingcart_username_ref
-AS ON INSERT TO ShoppingCart
-WHERE new.username NOT IN (SELECT username FROM UserAccount)
-DO INSTEAD NOTHING;
-
-CREATE TABLE Orders (
-    order_id serial PRIMARY KEY,
-    username varchar(255) NOT NULL,
-    total float8
-);
-
-CREATE RULE orders_username_ref
-AS ON INSERT TO Orders
-WHERE new.username NOT IN (SELECT username FROM UserAccount)
-DO INSTEAD NOTHING;
-
-
-CREATE TABLE OrderListing (
-    order_id serial references Orders(order_id),
-    listing_id serial references GameListing(listing_id),
-    PRIMARY KEY (order_id, listing_id)
-);
-
-
-CREATE TABLE DeveloperOrders(
-    username varchar(255) NOT NULL,
-    order_id serial references GameListing(listing_id),
-    PRIMARY KEY (username, order_id)
-);
-
-CREATE RULE devorders_username_ref
-AS ON INSERT TO DeveloperOrders
-WHERE new.username NOT IN (SELECT username FROM DeveloperAccount)
-DO INSTEAD NOTHING;
-
-CREATE TABLE Reviews (
-    username varchar(255) NOT NULL,
-    listing_id serial references GameListing(listing_id),  
-    rating integer NOT NULL,
-    content text NOT NULL,
-    date timestamp,
-    PRIMARY KEY (username, listing_id)
-);
-
-CREATE RULE reviews_username_ref
-AS ON INSERT TO Reviews
-WHERE new.username NOT IN (SELECT username FROM UserAccount)
-DO INSTEAD NOTHING;
-```
-
-From here, all you need to do is run:
-```
-python app.py
-```
-
-And open `index.html` to run the app.
