@@ -36,12 +36,22 @@
       </div>
 
       <script>
+          function success(data){
+            if (data['status'])
+            alert(data['status']);
+          }
+
           function handleSubmitGames() {
-              alert('Game Created!');
+            $.ajax({
+              url:"http://localhost:4293/create/dev",
+              type:"POST",
+              data:'{"username": "asd", "password": "password", "email": "email", "studio": "studio"}',
+              contentType:"application/json",
+              dataType:"json",
+              success: success
+            });
           }
-          function success(){
-            alert("Success!");
-          }
+
           function handleSubmitDevAccounts() {
             $.ajax({
               url:"http://localhost:4293/create/dev",
@@ -49,9 +59,7 @@
               data:'{"username": "asd", "password": "password", "email": "email", "studio": "studio"}',
               contentType:"application/json",
               dataType:"json",
-              success: function(data){
-                alert(data);
-              }
+              success: success
             });
           }
       </script>
