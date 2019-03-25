@@ -1,10 +1,12 @@
+#!/usr/bin/env python3
+
 from flask import Flask, request, make_response
 from sqlalchemy import create_engine
 from flask_cors import CORS, cross_origin
 from utils import app, db, tunnel
 from games import add_gamelisting, show_all_games
 from payment import add_payment_method
-from data import get_data
+from data import vis_data
 from users import add_dev, find_dev, add_user, find_user, show_all_users, show_all_devs
 
 CORS(app)
@@ -58,7 +60,7 @@ def show_all_devs_endpoint():
 @app.route("/data")
 @cross_origin()
 def show_all_data_endpoint():
-     return get_data()
+     return vis_data()
 
 
 @app.route("/games")
