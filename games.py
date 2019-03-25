@@ -1,15 +1,40 @@
 from utils import db
+from flask import jsonify
 
 def get_games():
     pass
 
 def add_gamelisting(game_name, game_desc, is_on_sale, price, category, sale_price, developer):
-    add_gamelisting_command = 'INSERT INTO GameListing ("title", "description", "is_on_sale", "price", "category", "sale_price", "developer_username")' \
-                              f"VALUES ('{game_name}', '{game_desc}', {is_on_sale}, {price}, '{category}', {sale_price}, '{developer}');"
-    try:
-      db.engine.execute(add_gamelisting_command)
-    except Exception as e:
-        return {"error": str(e)}
-    return {"status": "success"}
+  find_gamelisting_command = f"SELECT * FROM GameListing WHERE title='{game_name}';"
+  result = db.engine.execute(find_gamelisting_command).first()
+  if result:
+    return jsonify({"status": f"Your game already exists! {result}"})
+  add_gamelisting_command = 'INSERT INTO GameListing ("title", "description", "is_on_sale", "price", "category", "sale_price", "developer_username")' \
+                            f"VALUES ('{game_name}', '{game_desc}', {is_on_sale}, {price}, '{category}', {sale_price}, '{developer}');"
+  try:
+    db.engine.execute(add_gamelisting_command)
+  except Exception as e:
+      return jsonify({"error": str(e)})
+  return show_all_games()
 
+
+def show_all_games():
+  find_all_gamelistings_command = "SELECT * FROM GameListing;"
+  results = db.engine.execute(find_all_gamelistings_command)
+  HTML_output = '<head>' \
+                '<title>Games</title>' \
+                '<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">' \
+                '</head>' \
+                '<body>' \
+                '<h1>All Games</h1>'
+
+  for row in results:
+    identifier, title, description, is_on_sale, price, category, sale_price, developer = row
+    HTML_output += f'<h2>{title}</h2>' \
+                    f'<h3>Description</h3> <p>{description}</p> ' \
+                    f'<h3>Category</h3> <p> {category} </p> ' \
+                    f'<h3>Details</h3> <ul> ' \
+                    f'<li>Price: {price}</li><li>Is this on sale? {is_on_sale}</li><li>Sale Price: {sale_price}</li></ul>'
+  HTML_output += "</body>"
+  return HTML_output
 
