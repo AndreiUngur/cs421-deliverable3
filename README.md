@@ -31,7 +31,7 @@ Games are central to our application as it is what users purchase. The form for 
 
 Whenever a game is created, the developer is shown other games in the same category with which their game competes with.
 * Creating games
-![Create Game](gifs/)
+![Create Game](gifs/create_game_view_all.gif)
 
 * Creating games on sale, without a price, is not allowed
 ![Create Game, Sale No Price](gifs/create_game_sale_no_price.gif)
