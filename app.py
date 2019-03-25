@@ -4,6 +4,7 @@ from flask_cors import CORS, cross_origin
 from utils import app, db, tunnel
 from games import add_gamelisting, show_all_games
 from payment import add_payment_method
+from data import get_data
 from users import add_dev, find_dev, add_user, find_user, show_all_users, show_all_devs
 
 CORS(app)
@@ -54,6 +55,12 @@ def show_all_devs_endpoint():
      return show_all_devs()
 
 
+@app.route("/data")
+@cross_origin()
+def show_all_data_endpoint():
+     return get_data()
+
+
 @app.route("/games")
 @cross_origin()
 def show_all_games_endpoint():
@@ -84,6 +91,7 @@ def add_gamelisting_endpoint():
 def add_payment_method_endpoint():
   content = request.json
   return add_payment_method()
+
 
 if __name__ == '__main__':
   app.run(port=port)

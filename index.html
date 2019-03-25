@@ -104,6 +104,43 @@
           <button type=button onclick="location.href = 'http://localhost:4293/games';" class="btn btn-info">View All</button>
         </form> 
       </section>
+      <hr>
+      <section id="payment">
+        <h1>Payment Methods</h1>
+        <form action="http://localhost:4293/create/payment" method="post">
+          <div style="display:inline-block">
+            <span>Preferred payment method: </span>
+            <select>
+              <option value="volvo">Volvo</option>
+              <option value="saab">Saab</option>
+              <option value="mercedes">Mercedes</option>
+              <option value="audi">Audi</option>
+            </select> 
+          </div>
+          <input type="text" id="title" name="title" value="Poutine Simluator">
+          <br><br>
+          Description:<br>
+          <input type="text" id="description" name="description" value="Simulates being a poutine">
+          <br><br>
+          Price:<br>
+          <input type="text" id="price" name="price" value="12.12">
+          <br><br>
+          Is this on sale?<br>
+          <input type="text" id="is_on_sale" name="is_on_sale" value="yes">
+          <br><br>
+          Sale Price:<br>
+          <input type="text" id="sale_price" name="sale_price" value="10.11">
+          <br><br>
+          Category:<br>
+          <input type="text" id="category" name="category" value="Food">
+          <br><br>
+          Your developer username:<br>
+          <input type="text" id="developer" name="developer" value="FrenchFry">
+          <br><br>
+          <input class="btn btn-primary" type="submit" value="Submit">
+          <button type=button onclick="location.href = 'http://localhost:4293/games';" class="btn btn-info">View All</button>
+        </form> 
+      </section>
     </div><!-- /.container -->
 
 
