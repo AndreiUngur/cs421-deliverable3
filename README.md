@@ -55,5 +55,5 @@ The final component of our minimum viable product: Payment methods used to purch
 ![Create Card Despite Existing](gifs/create_card_existing.gif)
 
 * We can also create RiseUp Wallets and Paypal accounts as payment methods
-![Create RiseUp & Paypal](create_riseup_and_paypal.gif)
+![Create RiseUp & Paypal](gifs/create_riseup_and_paypal.gif)
 
